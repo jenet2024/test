@@ -1,0 +1,233 @@
+<?php
+session_start();
+$email = isset($_SESSION['email']);
+
+
+//liste des articles avec dates
+$articles = [
+    [
+        'date' => '2023-01-01',
+        'html' => "<div class='article'>
+            <div class='image'><img src='images/alesia.jpg' whidth='50%' alt='Photo 1'></div>
+            <div class='texte'>
+                <h3>Alesia</h3>
+                <p>La localisation de la bataille d’Alésia a longtemps suscité des débats. Au XIXe siècle, Napoléon III a initié d’importantes fouilles à Alise-Sainte-Reine, menées de 1861 à fin 1865. Ces fouilles ont permis la découverte d’un grand nombre d’armes, de monnaies gauloises et romaines, ainsi que d’objets militaires. De plus, la méthode utilisée, qui consistait à confronter les découvertes avec les textes de César, ressemblant à l’archéologie expérimentale, a permis la reconstitution grandeur nature de segments des lignes d’investissement et de machines de guerre romaines.
+                    Malgré l’importance de ces découvertes, le débat n’est toujours pas clos, et la communauté scientifique reste divisée.
+                    Dans les années 1990, une équipe d’archéologues franco-allemande a apporté de nouvelles preuves, confirmant que l’oppidum du Mont-Auxois à Alise-Sainte-Reine et le siège militaire du Ier siècle av. J.-C. qui y a été révélé par l’archéologie correspondent bien à la bataille d’Alésia.
+                    Aujourd’hui, la communauté scientifique française et internationale considère Alise-Sainte-Reine comme le lieu historique de la bataille. C’est donc naturellement sur cet emplacement que le MuséoParc Alésia s’est établi. »</p>
+            </div>
+        </div>"
+    ],
+    [
+        'date' => '2023-01-15',
+        'html' => "<div class='article'>
+            <div class='texte'>
+                <h3>Bibracte</h3>
+                <p>Au cœur d’une forêt de 1000 hectares se niche une ville qui a accueilli entre 5 et 10 000 habitants, à la période charnière de la conquête de la Gaule par les Romains. Une ville éphémère, capitale du puissant peuple des Eduens, qui fut un centre artisanal, commercial et politique de premier ordre aux IIe et Ier siècles avant notre ère, et qui vit passer Vercingétorix et Jules César.
+                    Aujourd’hui, vous cheminez à travers les arases des murs antiques, habitations ou bâtiments publics, passez près des vestiges d’un couvent de la fin du moyen-âge, découvrez une fontaine.
+                    Les vestiges de la ville sont aujourd’hui enserrés d’un écrin de verdure. La qualité des paysages et la richesse biologique du milieu sont telles que le massif du mont Beuvray tout entier a été classé en 1990 au titre des Sites pour son intérêt paysager et scientifique et qu’il est référencé ZNIEFF et Natura 2000, tandis que le sommet est classé au titre des Monuments historiques depuis 1988.
+                </p>
+            </div>
+            <div class='image'><img src='images/bibracta.jpg' whidth='50%' alt='Photo 1'></div>
+        </div>"
+    ],
+
+];
+ 
+//Trie des articles par date
+usort($articles, function ($a, $b) {
+    return strtotime($b['date']) - strtotime($a['date']);
+});
+
+//Si non connecter on garde suelement les 3 plus recents
+if (!$email) {
+    $articles = array_slice($articles, 0, 3);
+}
+
+?>
+
+
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Playwrite+IT+Moderna:wght@100..400&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+    <title>Archeo IT</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <?php include 'header.php'; ?>
+    </header>
+    <!-- <main> -->
+
+    <?php
+    //Recuperer les 3 derniers articles
+    $topArticles = array_slice($articles, 0, 3);
+    ?>
+
+    <div class="bandeau">
+        <?php foreach ($topArticles as $index => $article): ?>
+            <?php
+            // Extraction du titre depuis la balise <h3>
+            $title = 'Article sans titre'; // fallback
+            if (preg_match('/<h3>(.*?)<\/h3>/', $article['html'], $matches)) {
+                $title = $matches[1];
+            }
+            ?>
+            <div class="section">
+                <a href="#article<?= $index ?>"><?= htmlspecialchars($title) ?></a>
+            </div>
+        <?php endforeach; ?>
+
+        <?php if (!$email): ?>
+            <div class="voir-plus">
+                <a href="seconnecter.php" class="btn_transparent"><br>Voir +</a>
+            </div>
+        <?php endif; ?>
+    </div>
+
+    <div class="definition-container">
+        <div class="definition">
+            <h3>L'Archéologie, qu'est-ce-que c'est ? <br><br></h3>
+            <p>L'archeologie est une science qui étudie les traces laissées pas les êtres humains dans le passé, comme des objets, des outils, des bâtiments, des sépulturesou des ossements, afin de comprendre comment vivaient les populations anciennes.  <br>
+            L'archéologie s'intéresse à toutes les periodes de l'histoire, depuis la préhistoire jusqu'a des époques plus recentes, et concerne toutes les régions du monde. <br>
+            Les archéologues  mènent des fouilles sur des sites souvent enfois sous terre ou sous l'eau, puis analysent les vestiges découvert pour reconstituer les modes de vie, les croyances, les échanges ou encore l'organisation des sociétés. <br>
+            L'archéologie est essentielle pour mieux connaitre notre passé, surtout quand il s'agit de peuple anciens qui n'ont pas laissé de textes ou d'écrit. <br>
+            Elle permet aussi de préserver le patrimoine culturel, de protéger les sites historiques et de transmettre la mémoire des civilisation dispartue aux générations futures. En observant l'évolution des sociétés humaines, elle nous aide à mieux comprendre le monde d'aujourd'hui.</p>
+        </div>
+
+        <div class="cartedef"><img src="carte (1).jpg" alt="carte"></div>
+
+    </div>
+    <div class="separation"></div>
+    <div class="video-container">
+
+        <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;">
+        <iframe src="https://geo.dailymotion.com/player.html?video=x5i4ajl"
+        style="width:50%; height:50%; position:absolute; left:400px; top:100px; overflow:hidden; border:none;"
+        allowfullscreen
+        title="Dailymotion Video Player"
+        allow="web-share">
+        </iframe>
+        <div class="texte-video">
+        <p>Venez visitez les chantiers de fouilles archéologiques en France, vous verrez les outils de fouille utilisés, les techeniques de recherche ainsi que la valeur des monument/outils historique.</p>
+        </div>
+        </div>
+
+    </div>
+    <div class="separation"></div>
+
+    <div class="carousel-container">
+
+        <div class="titre-carousel majuscule text-gras">
+            <h2>découvrez nos lieux de fouille</h2>
+        </div>
+
+        <div id="carouselExampleIndicators" class="carousel slide">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                <img src="carouselle/ChauvetC(1).jpg" class="d-block w-100" alt="slide 2">
+                </div>
+                <div class="carousel-item">
+                <img src="carouselle/LascauxC(1).jpg" class="d-block w-100" alt="slide 3">
+                </div>
+                <div class="carousel-item">
+                <img src="carouselle/SoyonC(1).jpg" class="d-block w-100" alt="slide 3">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="separation"></div>
+
+    <div class="outil-container">
+        <div class="titre-outil majuscule text-gras">
+            <h2>les indispensables d'un archéologue</h2>
+        </div>
+
+        <div class="outil">
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                <div class="col ">
+                    <div class="card h-100">
+                    <img src="images/photoOutils/pioche.jpg" class="card-img-top" alt="pinceaux">
+                    <div class="card-body">
+                        <h5 class="card-title">Les Outils Indispensables de l'Archéologue</h5>
+                        <p class="card-text">Cette collection d'outils de précision est utilisée pour le nettoyage et l'analyse fine des artefacts. Les outils en métal avec des pointes variées permettent de gratter délicatement la terre et les dépôts des objets découverts. Les brosses, notamment la brosse métallique, sont employées pour enlever la poussière et les particules sans rayer ou abîmer les surfaces fragiles. Ces instruments sont indispensables pour révéler les détails des artefacts et préparer leur étude en laboratoire.</p>
+                    </div>
+                    </div>
+                </div>
+                <div class="col carte">
+                    <div class="card h-100">
+                    <img src="images/photoOutils/minioutils.jpg" class="card-img-top" alt="petit outils">
+                    <div class="card-body">
+                        <h5 class="card-title">Les Instruments de Précision pour l'Étude des Artefacts</h5>
+                        <p class="card-text">Cette collection d'outils de précision est utilisée pour le nettoyage et l'analyse fine des artefacts. Les outils en métal avec des pointes variées permettent de gratter délicatement la terre et les dépôts des objets découverts. Les brosses, notamment la brosse métallique, sont employées pour enlever la poussière et les particules sans rayer ou abîmer les surfaces fragiles. Ces instruments sont indispensables pour révéler les détails des artefacts et préparer leur étude en laboratoire.</p>
+                    </div>
+                    </div>
+                </div>
+                <div class="col carte">
+                    <div class="card h-100">
+                    <img src="images/photoOutils/outils_pinceaux.jpg" class="card-img-top" alt="gros outils">
+                    <div class="card-body">
+                        <h5 class="card-title">Les Pinceaux de Nettoyage pour la Préservation des Découvertes</h5>
+                        <p class="card-text">Ces pinceaux sont spécialement conçus pour le nettoyage des artefacts archéologiques. Les poils doux permettent de brosser délicatement la poussière et les débris des objets sans les endommager. Les différentes tailles et formes des pinceaux permettent de travailler sur des artefacts de toutes tailles, des plus grands aux plus petits et délicats. Ces outils sont essentiels pour la préservation et la préparation des artefacts avant leur analyse et leur exposition.</p>
+                    </div>
+                    </div>
+                </div>
+            
+            </div>
+
+        </div>
+    </div>
+
+    <div class="separation"></div>
+
+    <div class="article-contenaire">
+        <?php 
+        foreach ($articles as $index => $articles): ?>
+            <div id="article<?= $index ?>">
+                <?= $articles['html'] ?>
+            </div>
+            <!-- echo $articles['html']; -->
+    
+        
+        <?php endforeach; ?>   
+
+        <?php if (!$email) : ?>
+            <div class="voirautre"><p ><a href="seconnecter.php"><br>Connectez vous pour lire tous les articles !</a></p></div>
+        <?php endif; ?>
+    </div>
+
+
+
+    <!-- </main> -->
+<?php
+    include 'footer.php';
+?>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+        
+
+</body>
+
+</html>

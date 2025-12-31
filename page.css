@@ -1,0 +1,106 @@
+
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+*{
+    padding:0;
+    margin:0;
+    top:0;
+    box-sizing: border-box;
+    font-family:"Poppins", sans-serif;
+}
+body{
+    background:url("images\archeo2.PNG")no-repeat;
+    background-size: cover;
+    background-position:center;
+}
+.rien{
+    /* height:1000 px; */
+    height: 50%;
+}
+.entête{
+   
+    margin-left:137px;
+    /* display:flex; */
+}
+.texte{
+    width: 50%;
+    margin-left:200px;
+    height : 50px;
+}  
+.image{
+     width: 50%;
+     margin-left:245px;
+     height: 400px;
+}
+.motcle{
+    /* color:white; */
+    
+}
+.animated-square{
+    
+    border-radius:50px 50px 50px;
+    height:400px;
+    /* width:100px; */
+    background-color: transparent;
+    animation:rotate 2s linear infinite;
+}
+/* @keyframes rotate{
+    0%{ transform: rotate(0deg);}
+    50%{ transform: rotate(-60deg);}
+    100% { transform: rotate(360deg);}
+}    */
+/* .loader-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.loader {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background: linear-gradient(0deg, #FFFFFF 50%, #FF5C35 100%);
+  animation: spin 1s linear infinite;
+}
+
+.inner-circle {
+  width: 90%;
+  height: 90%;
+   background-color: white;
+  border-radius: 50%;
+} */
+
+@keyframes spin {
+  from {
+    transform: rotate(0);
+  }
+  to{
+    transform: rotate(360deg);
+  }
+}
+.monbutton{
+    margin-left:450px;
+
+}
+button{
+    cursor:pointer;
+    width: 25%;
+    height: 3rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border : none;
+    /* outline: none; */
+    border-radius: 2rem;
+    margin: 1.5rem 0; 
+    transition: 0.4s;
+    position: center;
+    color:blueviolet;
+}
+button:hover{
+     transform:scale(1.02);
+    box-shadow: 0 5px 15px rgba(5, 1, 19, 0.4);
+}

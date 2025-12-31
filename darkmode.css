@@ -1,0 +1,22 @@
+ /* Mode sombre */
+body.dark-mode {
+    background-color: #121212;
+    color: #0d0d0d;
+}
+
+/* Style du bouton */
+.toggle-btn {
+    padding: 10px 20px;
+    background-color: #008cba;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+.toggle-btn:hover {
+    background-color: #005f5f;
+}
+
